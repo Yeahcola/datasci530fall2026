@@ -33,6 +33,7 @@ panel on the left:
 
 Delete existing table
 -- SQLBook: Code
+-- Active: 1794501906967@@127.0.0.1@5432@postgres
 -- Active: 1710903290079@@127.0.0.1@5432@postgres
 -- If the table already exists we can drop it:
 -- If it doesn't exist nothing happens
@@ -66,13 +67,13 @@ Add rows to table
 -- You write system commands in capital letters to easily distinguish
 -- column names from system commands
 
-INSERT INTO drivers VALUES (1, 'Lewis Hamilton','British',103);
+INSERT INTO drivers VALUES (1, 'Lewis Hamilton', 'British', 103);
 
-INSERT INTO drivers  VALUES (4, 'Fernando Alonso', 'Spanish',32);
+INSERT INTO drivers VALUES (4, 'Fernando Alonso', 'Spanish', 32);
 
-INSERT INTO drivers  VALUES (3, 'Sebastian Vettel', 'German',91);
+INSERT INTO drivers VALUES (3, 'Sebastian Vettel', 'German', 91);
 
-INSERT INTO drivers  VALUES (2, 'Michael Schumacher', 'German',53);
+INSERT INTO drivers VALUES (2, 'Michael Schumacher', 'German', 53);
 
 -- SQLBook: Markup
 <font size="5"> 
@@ -97,10 +98,11 @@ Try it yourself!
 -- Select a new driver id (needs to be unique)
 -- Make sure to deparate arguments by a semicolon!
 
+INSERT INTO drivers VALUES (5, 'Ye Yuan', 'China', 2001);
 
+INSERT INTO drivers VALUES (6, 'Ladin Toplu', 'Turkiye', 354);
 
-
-
+INSERT INTO drivers VALUES (7, 'Xueqian Cheng', 'China', 666);
 -- SQLBook: Markup
 # <span style="color:darkblue"> II. Dataset Operations </span>
 
@@ -136,7 +138,6 @@ WHERE (nationality = 'Colombia') OR (nationality = 'German');
 -- Evaluate AND conditions
 SELECT * FROM drivers
 WHERE (nationality = 'German') AND (driver_id = 3) ;
-
 -- SQLBook: Markup
 <font size="5"> 
 
@@ -152,7 +153,6 @@ SELECT SUM(victories)  AS sum_victories,
        MIN(victories) AS min_victories,
        MAX(victories) AS max_victories
 FROM drivers;
-
 -- SQLBook: Markup
 <font size="5"> 
 
@@ -188,8 +188,8 @@ with more than 60 victories
 -- SQLBook: Code
 -- Write your own code!
 
-
-
+SELECT nationality, driver_id FROM drivers
+WHERE victories > 60
 -- SQLBook: Markup
 # <span style="color:darkblue"> III. Groupby + Chaining </span>
 
@@ -253,8 +253,14 @@ Try it yourself!
 -- SQLBook: Code
 # Write your own code
 
-
-
+SELECT nationality,
+       SUM(victories) AS sum_victories,
+       AVG(victories) AS mean_victories,
+       MIN(victories) AS min_victories,
+       MAX(victories) AS max_victories
+FROM drivers
+GROUP BY nationality
+HAVING MAX(victories) >= 71;
 -- SQLBook: Markup
 # <span style="color:darkblue"> IV. Merging </span>
 
@@ -275,6 +281,10 @@ INSERT INTO countries  VALUES ('Spanish','Europe');
 
 INSERT INTO countries  VALUES ('German','Europe');
 
+INSERT INTO countries  VALUES ('Turkiye','Europe');
+
+INSERT INTO countries  VALUES ('China','Asia');
+
 -- SQLBook: Markup
 <font size="5"> 
 
@@ -284,6 +294,7 @@ Left-join data
 - ``` LEFT JOIN``` is followed by the secondary dataset
 
 -- SQLBook: Code
+-- Active: 1794501906967@@127.0.0.1@5432@postgres
 -- Active: 1710903290079@@127.0.0.1@5432@postgres
 
 SELECT * 
